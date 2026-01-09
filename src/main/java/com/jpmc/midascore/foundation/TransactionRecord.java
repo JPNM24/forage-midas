@@ -2,6 +2,7 @@ package com.jpmc.midascore.foundation;
 
 import com.jpmc.midascore.entity.UserRecord;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,13 +22,43 @@ public class TransactionRecord {
     @ManyToOne
     private UserRecord recipient;
 
+    @Column(nullable = false)
     private float amount;
 
-    public TransactionRecord() {}
+    @Column(nullable = false)
+    private float incentive;
 
-    public TransactionRecord(UserRecord sender, UserRecord recipient, float amount) {
+    protected TransactionRecord() {
+        // JPA only
+    }
+
+    public TransactionRecord(UserRecord sender,
+                             UserRecord recipient,
+                             float amount,
+                             float incentive) {
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
+        this.incentive = incentive;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public UserRecord getSender() {
+        return sender;
+    }
+
+    public UserRecord getRecipient() {
+        return recipient;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public float getIncentive() {
+        return incentive;
     }
 }
